@@ -2,7 +2,7 @@
 
 Versión web del brandbook de Dis and Dat®, diseñado en Figma por Omónimo Design House.
 
-La página publicada (https://migue-rgb.github.io/dis-and-dat-brandbook-web/) está en la carpeta `docs/` (GitHub Pages la sirve desde ahí).
+La página publicada (https://omonimo-design-house.github.io/dis-and-dat-brandbook-web/) está en la carpeta `docs/` (GitHub Pages la sirve desde ahí).
 
 ## Actualizar la página
 
