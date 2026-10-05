@@ -1,11 +1,15 @@
 @import "tailwindcss" source(none);
 @source "../docs/index.html";
 
-html { background: #000f28; }
+/* Stop iOS/iPadOS Safari from inflating text ("Text Autosizing") on the scaled-down page */
+html { background: #000f28; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { margin: 0; overflow-x: hidden; }
-.page { width: 1920px; position: relative; }
+/* The 1920px design is scaled to the viewport with a transform (set in main.js);
+   .stage reserves the scaled height so the document scrolls correctly. */
+.stage { position: relative; overflow: hidden; }
+.page { width: 1920px; position: relative; transform-origin: 0 0; }
 .frame { display: block; position: relative; width: 1920px; overflow: hidden; }
-.menu-btn { position: fixed; top: 195px; left: 1765px; width: 80px; height: 80px; z-index: 50; cursor: pointer; }
+.menu-btn { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 50; cursor: pointer; transform-origin: 0 0; }
 [data-nav], [data-href] { cursor: pointer; }
 
 .ff-alegreya { font-family: 'Alegreya Sans', sans-serif; }

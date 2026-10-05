@@ -16,8 +16,18 @@ const LINKS = {
   '41:478': 'https://drive.google.com/drive/folders/1b-VdOg4zEBGEI5WMku-qgJBc0TLL8PTQ?usp=drive_link',
 };
 
+// Scale the 1920px-wide design to the viewport. A transform (not CSS zoom) renders
+// identically in Safari/iPadOS, Chrome and Firefox.
+const stage = document.querySelector('.stage');
 const page = document.querySelector('.page');
-const fit = () => { page.style.zoom = window.innerWidth / 1920; };
+const menu = document.querySelector('.menu-btn');
+const fit = () => {
+  const s = document.documentElement.clientWidth / 1920;
+  page.style.transform = `scale(${s})`;
+  stage.style.height = `${page.offsetHeight * s}px`;
+  // Figma places the MENÚ button at x=1765, y=195 of the 1920px frame
+  menu.style.transform = `translate(${1765 * s}px, ${195 * s}px) scale(${s})`;
+};
 fit();
 window.addEventListener('resize', fit);
 
