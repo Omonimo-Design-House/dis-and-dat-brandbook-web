@@ -1,0 +1,33 @@
+@import "tailwindcss" source(none);
+@source "../docs/index.html";
+
+html { background: #000f28; }
+body { margin: 0; overflow-x: hidden; }
+.page { width: 1920px; position: relative; }
+.frame { display: block; position: relative; width: 1920px; overflow: hidden; }
+.menu-btn { position: fixed; top: 195px; left: 1765px; width: 80px; height: 80px; z-index: 50; cursor: pointer; }
+[data-nav], [data-href] { cursor: pointer; }
+
+.ff-alegreya { font-family: 'Alegreya Sans', sans-serif; }
+.ff-baskervville { font-family: 'Baskervville', serif; }
+/* PP Gosha Sans (Pangram Pangram) is not on Google Fonts; closest free stand-in */
+.ff-gosha { font-family: 'Space Grotesk', sans-serif; }
+
+/* Figma GLASS effect (download pills + menu button): frosted, refracting edge */
+:is([data-node-id="41:453"], [data-node-id="41:457"], [data-node-id="13:287"], [data-node-id="2033:669"],
+    [data-node-id="41:461"], [data-node-id="41:465"], [data-node-id="41:469"], [data-node-id="41:473"],
+    [data-node-id="41:477"]) {
+  background: linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.08));
+  -webkit-backdrop-filter: blur(4px) saturate(1.4);
+  backdrop-filter: blur(4px) saturate(1.4);
+  box-shadow: 0 4px 4px rgba(0,0,0,0.25), inset 1.5px 1.5px 1px rgba(255,255,255,0.75), inset -1px -1px 1px rgba(0,0,0,0.08);
+  filter: none;
+}
+
+/* Floating "MENÚ" button (Figma Frame 7, fixed while scrolling). Glass + soft 3.9px shadow */
+.menu-btn {
+  background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(255,255,255,0.2));
+  -webkit-backdrop-filter: blur(4px) saturate(1.4);
+  backdrop-filter: blur(4px) saturate(1.4);
+  box-shadow: 0 0 3.9px rgba(0,0,0,0.25), inset 1.5px 1.5px 1px rgba(255,255,255,0.8);
+}
