@@ -99,7 +99,10 @@ const { html } = await import(pathToFileURL(path.join(TMP, 'render.mjs')).href);
 const body = sections.map((s, i) =>
   `<section id="${s.id}" class="frame" style="height:${s.h}px">${html[i]}</section>`).join('\n');
 const template = await fs.readFile(path.join(ROOT, 'src/index.html'), 'utf8');
-await fs.writeFile(path.join(OUT, 'index.html'), template.replace('<!--SECTIONS-->', body));
+// Version stamp so browsers (Safari especially) fetch fresh CSS/JS after each deploy
+const v = Date.now().toString(36);
+await fs.writeFile(path.join(OUT, 'index.html'), template.replace('<!--SECTIONS-->', body)
+  .replace('href="styles.css"', `href="styles.css?v=${v}"`).replace('src="main.js"', `src="main.js?v=${v}"`));
 await fs.copyFile(path.join(ROOT, 'src/main.js'), path.join(OUT, 'main.js'));
 // Favicon: the Dis and Dat® monogram (Figma node 2013:643)
 await fs.copyFile(path.join(CACHE, '6701a851-4572-4385-95fa-465177be3c34.svg'), path.join(OUT, 'favicon.svg'));

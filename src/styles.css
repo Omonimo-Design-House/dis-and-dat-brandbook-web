@@ -1,8 +1,12 @@
 @import "tailwindcss" source(none);
 @source "../docs/index.html";
 
-/* Stop iOS/iPadOS Safari from inflating text ("Text Autosizing") on the scaled-down page */
-html { background: #000f28; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* iPadOS Safari "Text Autosizing" measures the unscaled 1920px layout and inflates the
+   text, so it overflows its boxes. Turn it off on every element ("100%" is not honoured
+   in iPad desktop mode), and give text boxes a max-height, which autosizing skips. */
+html { background: #000f28; }
+*, *::before, *::after { -webkit-text-size-adjust: none !important; text-size-adjust: none !important; }
+.page p, .page span, .page div, .page li, .page a, .page button { max-height: 999999px; }
 body { margin: 0; overflow-x: hidden; }
 /* The 1920px design is scaled to the viewport with a transform (set in main.js);
    .stage reserves the scaled height so the document scrolls correctly. */
