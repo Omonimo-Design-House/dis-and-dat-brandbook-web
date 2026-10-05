@@ -105,7 +105,16 @@ await fs.writeFile(path.join(OUT, 'index.html'), template.replace('<!--SECTIONS-
   .replace('href="styles.css"', `href="styles.css?v=${v}"`).replace('src="main.js"', `src="main.js?v=${v}"`));
 await fs.copyFile(path.join(ROOT, 'src/main.js'), path.join(OUT, 'main.js'));
 // Favicon: the Dis and Dat® monogram (Figma node 2013:643)
-await fs.copyFile(path.join(CACHE, '6701a851-4572-4385-95fa-465177be3c34.svg'), path.join(OUT, 'favicon.svg'));
+// Figma exports it 254×134.75 with preserveAspectRatio="none", which browsers stretch into a
+// square; pad it to a centred square viewBox so it keeps its proportions.
+const mono = (await fs.readFile(path.join(CACHE, '6701a851-4572-4385-95fa-465177be3c34.svg'), 'utf8'))
+  .replace(/<svg[^>]*>/, '<svg width="254" height="254" viewBox="0 -59.624 254 254" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg">');
+await fs.writeFile(path.join(OUT, 'favicon.svg'), mono);
+// PNG fallbacks (Safari tabs, iOS home screen) with a little breathing room
+const pngIcon = (size, pad, bg) => sharp(Buffer.from(mono)).resize(size - pad * 2, size - pad * 2, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+  .extend({ top: pad, bottom: pad, left: pad, right: pad, background: bg }).flatten(bg.alpha ? { background: bg } : false).png();
+await pngIcon(32, 1, { r: 0, g: 0, b: 0, alpha: 0 }).toFile(path.join(OUT, 'favicon-32.png'));
+await pngIcon(180, 22, { r: 235, g: 234, b: 220, alpha: 1 }).toFile(path.join(OUT, 'apple-touch-icon.png'));
 await fs.writeFile(path.join(OUT, '.nojekyll'), '');
 
 execSync(`npx @tailwindcss/cli -i src/styles.css -o docs/styles.css --minify`, { cwd: ROOT, stdio: 'inherit' });
